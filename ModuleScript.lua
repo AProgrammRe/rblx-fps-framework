@@ -26,6 +26,7 @@ function module.update()
 end
 
 function module.equip(object)
+	if equipped then equipped:Destroy() end
 	equipped = object:Clone()
 	equipped.Parent = viewmodel
 	module.Weldgun(equipped)
@@ -43,6 +44,45 @@ function module.equip(object)
 	animationLoadedForHumanoid:Play()
 	
 end
+
+function module.Shoot(target,damage,custom,headshot_damage,torso_damage,arms_damage,legs_damage)
+	if not equipped then return end
+	-- run hold animation (viewmodel)
+	local controller = viewmodel.AnimationController
+	local animationLoaded = controller:LoadAnimation(animations.Shoot)
+	animationLoaded:Play()
+	-- run for server view
+	local controllerHumanoid = character.Humanoid
+	local animationLoadedForHumanoid = controllerHumanoid:LoadAnimation(animations.ShootServer)
+	animationLoadedForHumanoid:Play()
+	
+	-- Damage
+	if target.Parent == character then
+		return
+	end
+	
+	
+	
+	if target.Parent:FindFirstChild("Humanoid") then
+		if not custom then
+			target.Humanoid.Health -= damage
+			return
+		end
+		if target.Name == "Head" then
+			target.Humanoid.Health -= headshot_damage
+		elseif target.Name == "UpperTorso" or target.Name == "Torso" or target.Name == "LowerTorso" then
+			target.Humanoid.Health -= torso_damage
+		elseif target.Name == "LeftArm" or target.Name == "RightArm" or target.Name == "LeftLowerArm" or target.Name == "LeftUpperArm" or target.Name == "RightUpperArm" or target.Name == "RightLowerArm" or target.Name == "LeftHand" or target.Name == "RightHand" then
+			target.Humanoid.Health -= arms_damage
+		elseif target.Name == "LeftLeg" or target.Name == "RightLeg" or target.Name == "LeftLowerLeg" or target.Name == "LeftUpperLeg" or target.Name == "RightUpperLeg" or target.Name == "RightLowerLeg" or target.Name == "LeftFoot" or target.Name == "RightFoot" then
+			target.Humanoid.Health -= legs_damage
+
+		
+		end
+	end
+	
+end
+
 
 function module.Weldgun(object, isServer)
 	if isServer then
@@ -79,3 +119,4 @@ end
 
 -- return module
 return module
+
