@@ -22,6 +22,8 @@ This script will setup the module script access to the server to do things like 
 ViewModel setup time! Something like this:
 ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/a6df41d4-3e7d-4361-928d-5958c3364d06)
 
+A viewmodel is for the local player to see what they are holding and their arms for them to see, etc. A viewmodel won't be visible to the server. It is for the local player's perspective.
+
 Make sure you make a camera part to where the camera viewing the arms will be for holding to gun. Name it CameraBone -- I realise this part is not that important. I was about to implement this but screw it. The part replacing it is the HRT.
 
 Add the arms.
@@ -52,6 +54,8 @@ Gotta install one plugin tho: https://create.roblox.com/marketplace/asset/804263
 
 Do that, i'll wait.
 
+Plugin: ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/cc6d65bb-76db-4858-9254-c87fb76da2cb)
+
 Now once installed, click on the bodyattach FIRST. Hold control and add a part you want to animate. Once done, go to the plugin and select it. There should be a button "new Motor6D".
 Do this for each part to be animated.
 
@@ -78,6 +82,8 @@ Naming the animation:
 Name the one for viewmodel as: Hold, Shoot, Walk
 
 For player's character (server side), the same as before but add "Server" next to it with no space. (ex: HoldServer)
+
+Example: ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/53662ca4-e6fe-4ec4-a0f3-69bc79c1e8c8)
 
 # Usage
 
