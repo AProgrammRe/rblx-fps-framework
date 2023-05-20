@@ -30,6 +30,9 @@ Name 1 as LeftArm and set the Part0 to the HRT itself and Part1 to the LeftArm o
 
 The last one as Handle and only set the Part0 to the HRT itself.
 
+If you did it right, you should have this or atleast something similar (Ignore the selected objects): ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/d5aa6268-dd68-4e68-a838-1a6bf90c6318)
+
+
 -- Guns setup
 Now, lets make the Guns!
 
