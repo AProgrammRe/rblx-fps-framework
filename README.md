@@ -57,10 +57,12 @@ Do this for each part to be animated.
 
 For the rest EXCEPT the parts to be animated, select the bodyattach FIRST, then the rest that won't be animated and click the "new Weld" on the plugin.
 
+Result should be similar as this: ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/67c4715b-db4d-499a-93a0-d9fd2abe1caf)
+
 Now we gotta animate it for two things: The viewModel and the player's character itself!
 So to do that, we gotta weld the tool to both of these.
 
-For the viewModel, it is fairly simple. Put the gun model inside the viewModel and select the HRT's Motor6D for handle and set Part1 to the bodyattach.
+For the viewModel, it is fairly simple. Put the gun model inside the viewModel and select the HRT's Motor6D for the handle we made before and set Part1 to the bodyattach.
 
 Same goes with the player's character but if you are using r6, use torso instead.
 
@@ -70,23 +72,32 @@ Make animations for hold, shoot, walk, etc.
 
 Publish it.
 
+After the publish, make a folder in the model for the animation. Set the animationId.
+
+Naming the animation: 
+Name the one for viewmodel as: Hold, Shoot, Walk
+
+For player's character (server side), the same as before but add "Server" next to it with no space. (ex: HoldServer)
+
 # Usage
 
 Then set it all up with a localscript in StarterPlayerScripts
 
+Here is a client setup and ready for use:
 
 
 ```lua
 local gunModel = game.ReplicatedStorage:WaitForChild("GunModels") -- gunModels stored.
-local viewModel = game.ReplicatedStorage:WaitForChild("Viewmodel") 
-local module = require(game.ReplicatedStorage:WaitForChild("FPSFramework"):WaitForChild("ModuleScript"))
-viewModel.Parent = game.Workspace.Camera
+local viewModel = game.ReplicatedStorage:WaitForChild("Viewmodel") -- ViewModel
+local module = require(game.ReplicatedStorage:WaitForChild("FPSFramework"):WaitForChild("ModuleScript")) -- Module Script
 
-repeat wait() until game.Players.LocalPlayer.Character
+viewModel.Parent = game.Workspace.Camera -- Set the parent of our viewmodel to the workspace camera
 
-module.setViewmodel(viewModel)
-module.SetPlayerCharacter(game.Players.LocalPlayer.Character)
-module.SetAnimationsFolder(game.ReplicatedStorage:WaitForChild("Animations"))
+repeat wait() until game.Players.LocalPlayer.Character -- Wait til player's character is loaded
+
+module.setViewmodel(viewModel) -- Set the viewmodel
+module.SetPlayerCharacter(game.Players.LocalPlayer.Character) -- Set the character
+module.SetAnimationsFolder(game.ReplicatedStorage:WaitForChild("Animations")) -- Now for this, you can set this up anytime another item is equip. Set this as the animation folder you made before.
 
 game:GetService("RunService").RenderStepped:Connect(function()
 	module.update()
