@@ -4,6 +4,7 @@ I created this framework and decide to open source. It is fairly simple. This is
 I will update this til it is finished for me.
 I made it for fun lol.
 
+# Tutorial
 # Setup
 
 First, make a server script.
@@ -13,6 +14,11 @@ local moduleScript = require(game.ReplicatedStorage:WaitForChild("FPSFramework")
 
 moduleScript.InitServer()
 ```
+
+This script will setup the module script access to the server to do things like equiping the gun for everyone else to see, etc, etc.
+
+# View Model setup
+
 ViewModel setup time! Something like this:
 ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/a6df41d4-3e7d-4361-928d-5958c3364d06)
 
@@ -33,7 +39,8 @@ The last one as Handle and only set the Part0 to the HRT itself.
 If you did it right, you should have this or atleast something similar (Ignore the selected objects): ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/d5aa6268-dd68-4e68-a838-1a6bf90c6318)
 
 
--- Guns setup
+# Gun Setup
+
 Now, lets make the Guns!
 
 You'd probably have something like this: 
@@ -63,6 +70,7 @@ Make animations for hold, shoot, walk, etc.
 
 Publish it.
 
+# Usage
 
 Then set it all up with a localscript in StarterPlayerScripts
 
@@ -85,3 +93,4 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 ```
 
+# Finish
