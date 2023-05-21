@@ -117,10 +117,12 @@ This will equip a gun you made earlier to the viewmodel and character
 module.equip(Model gunModel, intValue debounce) 
 ```
 
+
 This will return any targets where ever you shoot. This is useful for the ``module.Shoot()`` function
 ```lua
 module.FindTargetByRay(intValue distance)
 ```
+
 
 This will damage the target if it is a valid player's character.
 You can set the target as ``module.FindTargetByRay(intValue distance)``. Since this will return any targets found.
