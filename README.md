@@ -14,8 +14,8 @@ local moduleScript = require(game.ReplicatedStorage:WaitForChild("FPSFramework")
 
 moduleScript.InitServer()
 ```
-
-This script will setup the module script access to the server to do things like equiping the gun for everyone else to see, etc, etc.
+This part is important if you want the server to see actions made by playing (shooting, damaging others, etc)
+This script will setup a module script required from client to run remoteEvents to do things like equiping the gun for everyone else to see, damaging player, etc, etc.
 
 # View Model setup
 
