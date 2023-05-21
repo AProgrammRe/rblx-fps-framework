@@ -25,12 +25,34 @@ function module.update()
 	viewmodel.HumanoidRootPart.CFrame = game.Workspace.Camera.CFrame
 end
 
-function module.equip(object)
-	if equipped then equipped:Destroy() end
+local equipDebounce
+
+function module.equip(object,debounce)
+	if equipDebounce then
+		return
+	end
+	if equipped then
+		if equipped:FindFirstChild("Animations") then
+			module.SetAnimationsFolder(equipped.Animations)
+		end
+		local controller = viewmodel.AnimationController
+		local p = controller:LoadAnimation(animations.Change)
+		p.Looped = false
+		p:Play()
+		equipDebounce = true
+		equipped:Destroy()
+		
+		wait(debounce)
+		equipDebounce = false
+		p:Stop()
+
+	end
+
 	equipped = object:Clone()
 	equipped.Parent = viewmodel
 	module.Weldgun(equipped)
 	module.Weldgun(object,true)
+	
 	-- run hold animation (viewmodel)
 	local controller = viewmodel.AnimationController
 	local animationLoaded = controller:LoadAnimation(animations.Hold)
@@ -42,7 +64,8 @@ function module.equip(object)
 	local animationLoadedForHumanoid = controllerHumanoid:LoadAnimation(animations.HoldServer)
 	animationLoadedForHumanoid.Looped = true
 	animationLoadedForHumanoid:Play()
-	
+	equipped.char:Destroy()
+
 end
 
 function module.Shoot(target,damage,custom,headshot_damage,torso_damage,arms_damage,legs_damage)
@@ -64,25 +87,17 @@ function module.Shoot(target,damage,custom,headshot_damage,torso_damage,arms_dam
 	
 	
 	if target.Parent:FindFirstChild("Humanoid") then
-		if not custom then
-			target.Humanoid.Health -= damage
-			return
-		end
-		if target.Name == "Head" then
-			target.Humanoid.Health -= headshot_damage
-		elseif target.Name == "UpperTorso" or target.Name == "Torso" or target.Name == "LowerTorso" then
-			target.Humanoid.Health -= torso_damage
-		elseif target.Name == "LeftArm" or target.Name == "RightArm" or target.Name == "LeftLowerArm" or target.Name == "LeftUpperArm" or target.Name == "RightUpperArm" or target.Name == "RightLowerArm" or target.Name == "LeftHand" or target.Name == "RightHand" then
-			target.Humanoid.Health -= arms_damage
-		elseif target.Name == "LeftLeg" or target.Name == "RightLeg" or target.Name == "LeftLowerLeg" or target.Name == "LeftUpperLeg" or target.Name == "RightUpperLeg" or target.Name == "RightLowerLeg" or target.Name == "LeftFoot" or target.Name == "RightFoot" then
-			target.Humanoid.Health -= legs_damage
-
-		
-		end
+		script.Damage:FireServer(damage,custom,target,headshot_damage,torso_damage,arms_damage,legs_damage)
 	end
 	
 end
 
+function module.FindTargetByRay(distance)
+	local ray = Ray.new(equipped.bodyattach.Position,(game.Players:GetPlayerFromCharacter(character):GetMouse().Hit.Position - equipped.bodyattach.Position).Unit*distance)
+	local target,pos = game.Workspace:FindPartOnRay(ray,character,false,true)
+	return target
+	
+end
 
 function module.Weldgun(object, isServer)
 	if isServer then
@@ -103,12 +118,32 @@ function module.InitServer()
 
 			tool.Parent = plr.Character
 			if plr.Character.Torso:FindFirstChild("Motor6D") then
+				plr.Character.char:Destroy()
+
 				plr.Character.Torso.Motor6D:Destroy()
 			end
 			local Motor6D_handle = Instance.new("Motor6D")
 			Motor6D_handle.Parent = plr.Character:WaitForChild("Torso")
 			Motor6D_handle.Part0 = Motor6D_handle.Parent
 			plr.Character.Torso.Motor6D.Part1 = tool.bodyattach
+		end)
+		script.Damage.OnServerEvent:Connect(function(plr,damage,custom,target,headshot_damage,torso_damage,arms_damage,legs_damage)
+			
+			if not custom then
+				target.Humanoid.Health -= damage
+				return
+			end
+			if target.Name == "Head" then
+				target.Parent.Humanoid.Health -= headshot_damage
+			elseif target.Name == "UpperTorso" or target.Name == "Torso" or target.Name == "LowerTorso" then
+				target.Parent.Humanoid.Health -= torso_damage
+			elseif target.Name == "LeftArm" or target.Name == "RightArm" or target.Name == "LeftLowerArm" or target.Name == "LeftUpperArm" or target.Name == "RightUpperArm" or target.Name == "RightLowerArm" or target.Name == "LeftHand" or target.Name == "RightHand" then
+				target.Parent.Humanoid.Health -= arms_damage
+			elseif target.Name == "LeftLeg" or target.Name == "RightLeg" or target.Name == "LeftLowerLeg" or target.Name == "LeftUpperLeg" or target.Name == "RightUpperLeg" or target.Name == "RightLowerLeg" or target.Name == "LeftFoot" or target.Name == "RightFoot" then
+				target.Parent.Humanoid.Health -= legs_damage
+
+
+			end
 		end)
 	else
 		warn("Must be server sided to run this!")
@@ -119,4 +154,3 @@ end
 
 -- return module
 return module
-
