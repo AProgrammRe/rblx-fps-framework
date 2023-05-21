@@ -86,7 +86,7 @@ For player's character (server side), the same as before but add "Server" next t
 
 Example: ![image](https://github.com/AProgrammRe/rblx-fps-framework/assets/121419504/53662ca4-e6fe-4ec4-a0f3-69bc79c1e8c8)
 
-# Usage
+# Finishing setup
 
 Then set it all up with a localscript in StarterPlayerScripts
 
@@ -107,8 +107,26 @@ module.SetPlayerCharacter(game.Players.LocalPlayer.Character) -- Set the charact
 module.SetAnimationsFolder(game.ReplicatedStorage:WaitForChild("Animations")) -- Now for this, you can set this up anytime another item is equip. Set this as the animation folder you made before.
 
 game:GetService("RunService").RenderStepped:Connect(function()
-	module.update()
+	module.update() -- Set it so that the viewmodel is always visible to the camera each frame.
 end)
 ```
+# Basic functions:
+
+This will equip a gun you made earlier to the viewmodel and character
+```lua 
+module.equip(Model gunModel, intValue debounce) 
+```
+
+This will return any targets where ever you shoot. This is useful for the ``module.Shoot()`` function
+```lua
+module.FindTargetByRay(intValue distance)
+```
+
+This will damage the target if it is a valid player's character.
+You can set the target as ``module.FindTargetByRay(intValue distance)``. Since this will return any targets found.
+```lua
+module.Shoot(Part target, intValue damage, boolean custom?, intValue headshot_damage, intValue torso_damage, intValue arms_damage, intValue legs_damage)
+```
+
 
 # Finish
