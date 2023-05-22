@@ -132,5 +132,11 @@ You can set the target as ``module.FindTargetByRay(intValue distance)``. Since t
 module.Shoot(Part target, intValue damage, boolean custom?, intValue headshot_damage, intValue torso_damage, intValue arms_damage, intValue legs_damage)
 ```
 
+This will reset the viewmodel. (Use it only if the player dies.)
+```lua
+module.reset()
+```
+
+
 
 # Finish
