@@ -8,10 +8,12 @@ local moduleScript = require(game.ReplicatedStorage:WaitForChild("FPSFramework")
 
 moduleScript.InitServer()
 ```
+
 This part is important if you want the server to see actions made by players (shooting, damaging others, etc)
 
 This script will setup a module script required from client to run remoteEvents to do things like equiping the gun for everyone else to see, damaging player, etc, etc.
 
+Also, put a remote event and name it "HumanoidTool" in the module script
 # View Model setup
 
 ViewModel setup time! Something like this:
